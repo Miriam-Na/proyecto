@@ -1,0 +1,245 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.IO;
+namespace proyecto3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string m;
+            int a;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<");//inicio
+                Console.WriteLine("Bienvenido a mi programa");
+                Console.WriteLine("MATRICES");
+                Console.WriteLine("Elije una opcion de 1 al 4:"); // opciones
+                Console.WriteLine("1)Suma");
+                Console.WriteLine("2)Resta");
+                Console.WriteLine("3)Multiplicacion");
+                Console.WriteLine("4)Salir");
+                a = int.Parse(Console.ReadLine());
+                Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<");
+              //  Console.WriteLine("Elije las dimensiones de la matriz");
+             //   Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+                switch (a) //condicion
+                {
+                    case 1:  // condicion de suma
+                        int[,] matA, matB, matC;
+                        Console.WriteLine("Ingrese los valores de la primera matriz");
+                        matA = llenado("pri");
+                        Console.WriteLine("Ingrese los valores de la segunda matriz");
+                        matB = llenado("seg");
+                        matC = suma(matA, matB);
+                         generador(matC);
+
+                        break;
+                    case 2:  //condicion de resta
+                        int[,] matA1, matB1, matC1;
+                        Console.WriteLine("Ingrese los valores de la primera matriz");
+                        matA1 = llenado("pri");
+                        Console.WriteLine("Ingrese los valores de la segunda matriz");
+                        matB1 = llenado("seg");
+                        matC1 = res(matA1, matB1);
+                        generador(matC1);
+                        break;
+                    case 3:   //condicion de multipliacion
+                        int[,] matA2, matB2, matC2;
+                        Console.WriteLine("Ingrese los valores de la primera matriz");
+                        matA2 = llenado("pri");
+                        Console.WriteLine("Ingrese los valores de la segunda matriz");
+                        matB2 = llenado("seg");
+                        matC2 = mul(matA2, matB2);
+                        generador(matC2);
+                        break;
+                    case 4:  // condicion de salida
+                        Console.WriteLine("Vuelva pronto");
+                        Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                        Thread.Sleep(2000);
+                        Environment.Exit(0);
+                        break;
+                    default: // default por error
+                        Console.WriteLine("error");
+                        break;
+                }
+                Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+
+                Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                Console.WriteLine("¿Deseas introducir otros datos ?"); //pregunta de salida
+                m = Console.ReadLine();
+            } while (m == "si");
+            Console.WriteLine("Vuelva pronto"); // bloque para cerrar
+            Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            Thread.Sleep(2000);
+            Environment.Exit(0);
+            Console.ReadKey();
+        }
+        public static int[,] llenado(string x) // funcion de llenado
+        {
+            bool op;
+            int[,] matrizA;
+            int b=0, c=0;
+            do
+            {
+                try // validacion de dimension 
+                {
+                    Console.WriteLine("Primera dimension:");
+                    b = int.Parse(Console.ReadLine());
+                    op = false;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("error");
+                    op = true;
+                }
+            } while (op == true);
+            do
+            { 
+                try
+                {
+                    Console.WriteLine("Segunda dimension:");
+                    c = int.Parse(Console.ReadLine());
+                    op = false;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("error");
+                    op = true;
+                }
+            } while (op == true);
+            matrizA = new int[b, c];
+            Console.WriteLine("Ingerese datos de la matriz:"); // llenado de matriz y validacion
+            for (int i = 0; i < b; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    do
+                    {
+
+                        try
+                        {
+                            Console.WriteLine("ingrese posicion [" + i + "," + j + "]");
+                            matrizA[i, j] = int.Parse(Console.ReadLine());
+                            op = false;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("error");
+                            op = true;
+                        }
+                    } while (op==true);
+                    
+                }
+            }
+            return matrizA; //retorno y final de funcion
+        }
+        public static int[,] suma(int[,] m, int[,] n)  //inicio de funcion de suma
+        {
+            int[,] matS;
+            if ((m.GetLength(0) == n.GetLength(0)) && (m.GetLength(1) == n.GetLength(1)))
+            {
+
+                int fil = m.GetLength(0);     
+                int col = n.GetLength(0);
+                matS = new int[fil, col];
+                for (int i = 0; i < fil; i++) // suma de matrices
+                {
+                    for (int j = 0; j < col; j++)
+                    {
+                        matS[i, j] = m[i, j] + n[i, j];
+
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("error");
+                matS = null;
+            }
+            Console.WriteLine("Resultado de tu matriz");
+            foreach (int re in matS)
+            {
+                Console.WriteLine(re);
+            }
+
+            return matS; //fin
+        }
+        public static int[,] res(int[,] m, int[,] n)  // inicio de resta
+        {
+            int[,] matS;
+            if ((m.GetLength(0) == n.GetLength(0)) && (m.GetLength(1) == n.GetLength(1)))
+            {
+
+                int fil = m.GetLength(0); 
+                int col = n.GetLength(0);
+                matS = new int[fil, col];
+                for (int i = 0; i < fil; i++)   // inicio de la resta
+                {
+                    for (int j = 0; j < col; j++)
+                    {
+                        matS[i, j] = m[i, j] - n[i, j];
+
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("error");
+                matS = null;
+            }
+            Console.WriteLine("Resultado de tu matriz");
+            foreach (int re in matS) // impresion 
+            {
+                Console.WriteLine(re);
+            }
+
+            return matS; //fin
+        }
+        static int[,] mul(int[,] m, int[,] n) // inicio de multiplicacion
+        {
+            int[,] mA;
+            int a = m.GetLength(0);
+            int a2 = m.GetLength(1);
+            int b = n.GetLength(0);
+            int b2 = n.GetLength(1);
+
+            mA = new int[a, b2];
+            for (int i = 0; i < b2; i++) // inicio de multiplicacion
+            {
+                for (int j = 0; j < b; j++)
+                {
+                    int f = 0;
+                    for (int h = 0; h < a2; h++)
+                    {
+                        f = m[j, h] * n[j, h];
+                    }
+                    mA[j, i] = f;
+                }
+            }
+            Console.WriteLine("Valores de Matriz resultante");
+            foreach (int x in mA) // impresion
+            {
+                Console.WriteLine(x);
+            }
+            return mA;
+
+        }
+        static void generador(int[,] mat)
+        {
+            StreamWriter archivoNuevo; //Declaración de una variable para creacion y manejo de archivos
+            archivoNuevo = File.CreateText("prueba.txt"); //Creamos un archivo
+            archivoNuevo.WriteLine(mat);
+            archivoNuevo.Close(); // Al cerrar el archivo nos aseguramos que no queda ningún dato por guardar
+
+
+        }
+    }
+}
